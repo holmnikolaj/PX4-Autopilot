@@ -45,6 +45,7 @@
 #include <uORB/topics/home_position.h>
 #include <uORB/topics/manual_control_setpoint.h>
 #include <uORB/topics/vehicle_status.h>
+#include <uORB/topics/mount_orientation.h>
 #include <lib/geo/geo.h>
 
 // TODO: make this switchable in the board config, like a module
@@ -108,6 +109,7 @@ protected:
 
 	uORB::SubscriptionData<home_position_s>			_sub_home_position{ORB_ID(home_position)};
 	uORB::SubscriptionData<vehicle_status_s>		_sub_vehicle_status{ORB_ID(vehicle_status)};
+	uORB::SubscriptionData<mount_orientation_s>		_sub_mount_orientation{ORB_ID(mount_orientation)};
 
 	State _current_state{State::none};
 	float _target_acceptance_radius{0.0f}; /**< Acceptances radius of the target */

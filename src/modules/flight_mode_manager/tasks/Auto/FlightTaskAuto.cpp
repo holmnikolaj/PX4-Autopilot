@@ -320,6 +320,7 @@ void FlightTaskAuto::_set_heading_from_mode()
 {
 
 	Vector2f v; // Vector that points towards desired location
+	bool direct_yaw = false;
 
 	switch (_param_mpc_yaw_mode.get()) {
 
@@ -347,9 +348,16 @@ void FlightTaskAuto::_set_heading_from_mode()
 		// in the subclasses where the velocity setpoints are generated.
 		v.setAll(NAN);
 		break;
+
+	case 5:
+		_yaw_setpoint = _sub_mount_orientation.get().attitude_euler_angle[2];
+		direct_yaw = true;
+		break;
 	}
 
-	if (PX4_ISFINITE(v.length())) {
+	if (direct_yaw) {
+		// yaw already calculated.
+	} else if (PX4_ISFINITE(v.length())) {
 		// We only adjust yaw if vehicle is outside of acceptance radius. Once we enter acceptance
 		// radius, lock yaw to current yaw.
 		// This prevents excessive yawing.
